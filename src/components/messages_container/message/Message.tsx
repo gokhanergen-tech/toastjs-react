@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import MessageContext from '../../../context/context';
-import { Params } from '../../../interfaces/interfaces';
+import { withKey } from '../../../interfaces/interfaces';
 import Button from '../../button/button';
 
 import styles from './message.module.css'
@@ -36,25 +36,39 @@ const types = {
   }
 }
 
-const Message = ({ message, type, timeout, userControl, base }: Params & { base: Params }) => {
+const Message = ({ message, type, timeout,  autoCloseWithTimeout, base, animation }: withKey & { base: withKey }) => {
 
   const { remove }: any = useContext(MessageContext);
 
   const timeoutRef: { current: any } = useRef(null);
 
+  const messageRef: { current: any } = useRef(null);
+
+  const [removing,setRemoving]=useState(false);
+
   const removeMessage = () => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current)
     }
-    remove(base);
+    if (messageRef.current && animation.slideAnimation) {
+      messageRef.current.classList.remove(styles.message_slide_up);
+      messageRef.current.classList.add(styles.message_slide_down);
+      setRemoving(true);
+      setTimeout(() => {
+          remove(base);
+      }, animation.animationDuration)
+    } else {
+      remove(base);
+    }
+
   }
 
   useEffect(() => {
-    if (!userControl) {
+    if (autoCloseWithTimeout) {
       timeoutRef.current = setTimeout(() => {
         timeoutRef.current = null;
         removeMessage();
-      }, timeout)
+      }, timeout + ((animation.slideAnimation) ? animation.animationDuration : 0))
     }
   }, [])
 
@@ -62,17 +76,19 @@ const Message = ({ message, type, timeout, userControl, base }: Params & { base:
 
   return (
     <div ref={(instance) => {
-      if (!userControl && instance) {
-        instance.style.setProperty("--timeout", timeout + "ms")
+      if (instance && animation.slideAnimation) {
+        instance.style.setProperty("--duration", animation.animationDuration + "ms")
+        instance.classList.add(styles.message_slide_up);
       }
-    }} className={styles.message_wrapper + " " + selectedType.style + " " + (!userControl ? styles.message_animation : "")}>
+      messageRef.current = instance;
+    }} className={styles.message_wrapper + " " + selectedType.style}>
       <div className={styles.message_header}>
         <h5>{selectedType.text}</h5>
         <span>{selectedType.icon}</span>
       </div>
       <p className={styles.message_text}>{message}</p>
       <div className={styles.message_button}>
-        <Button onClick={removeMessage} value={"OK"}></Button>
+        <Button disabled={removing} onClick={removeMessage} value={"OK"}></Button>
       </div>
     </div>
   )

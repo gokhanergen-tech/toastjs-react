@@ -1,5 +1,5 @@
 :root{
-    --timeout:5000ms;
+    --duration:1000ms;
     --success-color:rgb(6, 100, 29);
     --error-color:rgb(253, 55, 55);
     --warning-color:rgb(230, 176, 0);
@@ -14,9 +14,14 @@
     
 }
 
-.message_animation{
-    animation: message var(--timeout) linear;
-    animation-fill-mode: forwards;
+.message_slide_up{
+   animation: message_slideup var(--duration) linear;
+   animation-fill-mode: forwards;
+}
+
+.message_slide_down{
+   animation: message_slidedown var(--duration) linear;
+   animation-fill-mode: forwards;
 }
 
 .message_header{
@@ -76,21 +81,24 @@
 }
 
 
-@keyframes message {
+@keyframes message_slideup {
   0%{
     transform: translateX(250px);
   }
 
-  10%{
+  100%{
     transform: translateX(0px);
   }
 
-  90%{
-   transform: translateX(0px);
-  }
+}
 
-  100%{
-    transform: translateX(250px);
-  }
+@keyframes message_slidedown {
+    0%{
+      transform: translateX(0px);
+    }
+  
+    100%{
+      transform: translateX(250px);
+    }
 }
 

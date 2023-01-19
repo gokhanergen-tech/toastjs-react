@@ -1,7 +1,14 @@
+
+ 
 export interface Params{
     message:string,
     type:"info"|"error"|"success"|"warning",
     timeout:number,
-    userControl:boolean,
-    key?:number
+    autoCloseWithTimeout:boolean,
+    animation:{
+        slideAnimation:boolean
+        animationDuration:number
+    },
  }
+
+export type withKey=Params&{key:number}
