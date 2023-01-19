@@ -1,5 +1,6 @@
 :root{
     --duration:1000ms;
+    --total_time:0ms;
     --success-color:rgb(6, 100, 29);
     --error-color:rgb(253, 55, 55);
     --warning-color:rgb(230, 176, 0);
@@ -11,6 +12,7 @@
     box-shadow: 0 0 5px black;
     padding: 0.3rem 0.5rem;
     margin: 0.5rem 0;
+    position: relative;
     
 }
 
@@ -80,6 +82,17 @@
     justify-content: center;
 }
 
+.divider{
+    position: absolute;
+    height: 100%;
+    width: 5px;
+    background-color: rgba(0, 183, 255, 0.6);
+    background-image:linear-gradient(to bottom,rgba(0, 183, 255, 0.6),rgb(0, 255, 217));
+    left: -5px;
+    top: 0;
+    animation: divider_height calc(var(--total_time)) linear 1 forwards;
+}
+
 
 @keyframes message_slideup {
   0%{
@@ -101,4 +114,15 @@
       transform: translateX(250px);
     }
 }
+
+@keyframes divider_height{
+    from{
+      height: 100%;
+    }
+
+    to{
+       height: 0%;
+    }
+}
+
 

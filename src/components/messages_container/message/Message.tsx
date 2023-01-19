@@ -36,7 +36,7 @@ const types = {
   }
 }
 
-const Message = ({ message, type, timeout,  autoCloseWithTimeout, base, animation }: withKey & { base: withKey }) => {
+const Message = ({ message,button, type,className,title, timeout, autoCloseWithTimeout, header, body, base, animation }: withKey & { base: withKey }) => {
 
   const { remove }: any = useContext(MessageContext);
 
@@ -44,7 +44,7 @@ const Message = ({ message, type, timeout,  autoCloseWithTimeout, base, animatio
 
   const messageRef: { current: any } = useRef(null);
 
-  const [removing,setRemoving]=useState(false);
+  const [removing, setRemoving] = useState(false);
 
   const removeMessage = () => {
     if (timeoutRef.current) {
@@ -55,7 +55,7 @@ const Message = ({ message, type, timeout,  autoCloseWithTimeout, base, animatio
       messageRef.current.classList.add(styles.message_slide_down);
       setRemoving(true);
       setTimeout(() => {
-          remove(base);
+        remove(base);
       }, animation.animationDuration)
     } else {
       remove(base);
@@ -81,15 +81,31 @@ const Message = ({ message, type, timeout,  autoCloseWithTimeout, base, animatio
         instance.classList.add(styles.message_slide_up);
       }
       messageRef.current = instance;
-    }} className={styles.message_wrapper + " " + selectedType.style}>
-      <div className={styles.message_header}>
-        <h5>{selectedType.text}</h5>
-        <span>{selectedType.icon}</span>
+    }} className={styles.message_wrapper + " " + selectedType.style+" "+(className?className:"")}>
+
+      {
+        header ? header : <div className={styles.message_header}>
+          <h5>{title?title:selectedType.text}</h5>
+          <span>{selectedType.icon}</span>
+        </div>
+      }
+
+
+      <div>
+        {
+          body ? body : <p className={styles.message_text}>{message}</p>
+        }
       </div>
-      <p className={styles.message_text}>{message}</p>
+
       <div className={styles.message_button}>
-        <Button disabled={removing} onClick={removeMessage} value={"OK"}></Button>
+        <Button customClassName={(button&&button.className)?button.className:""} disabled={removing} onClick={removeMessage} value={(button&&button.title)?button.title:"OK"}></Button>
       </div>
+
+      <div ref={(instance) => {
+        if (instance && autoCloseWithTimeout) {
+          instance.style.setProperty("--total_time", timeout + ((animation.slideAnimation) ? animation.animationDuration : 0) + "ms")
+        }
+      }} className={styles.divider}></div>
     </div>
   )
 }

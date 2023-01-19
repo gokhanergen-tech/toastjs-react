@@ -14,7 +14,7 @@ export default () => {
         @property animationDuration min 0 max 10000
         @property timeout min 0 max 10000
       **/
-      show: ({ message, type, timeout = 1000, autoCloseWithTimeout = false, animation = { animationDuration: 1000, slideAnimation: true } }: Pick<Params, 'type' | 'message'> & Partial<Params>) => {
+      show: ({ message, type,button,title="",className="",header,body, timeout = 1000, autoCloseWithTimeout = false, animation = { animationDuration: 1000, slideAnimation: true } }: Pick<Params, 'type' | 'message'> & Partial<Params>) => {
 
         if (animation.animationDuration < 0 || animation.animationDuration > 10000) {
           throw new Error("Wrong animation duration! please, use it as min 0 and max 10000")
@@ -26,7 +26,7 @@ export default () => {
 
         const isValid=isMaxValid();
 
-        const messageObject={ message, type, timeout, autoCloseWithTimeout, animation, key:uuidv4() };
+        const messageObject={ message,button, type,className,title, timeout, autoCloseWithTimeout, animation,header,body, key:uuidv4() };
         if(!isValid){
           addQueue(messageObject)
         }else{
