@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import MessageContext from '../../../context/context';
 import { withKey } from '../../../interfaces/interfaces';
+import { position } from '../../../index'
 import Button from '../../button/button';
 
 import styles from './message.module.css'
@@ -36,7 +37,24 @@ const types = {
   }
 }
 
-const Message = ({ message,button, type,className,title, timeout, autoCloseWithTimeout, header, body, base, animation }: withKey & { base: withKey }) => {
+const positionAnimations={
+  left:{
+      up:styles.up_left,
+      down:styles.down_left
+  },
+  right:{
+    up:styles.up_right,
+    down:styles.down_right
+  },
+  center:{
+    up:styles.up_center,
+    down:styles.down_center
+  }
+}
+
+
+
+const Message = ({ message,button, type,className,title, timeout, autoCloseWithTimeout, header, body, base, animation,position }: withKey & { base: withKey,position:position }) => {
 
   const { remove }: any = useContext(MessageContext);
 
@@ -46,13 +64,15 @@ const Message = ({ message,button, type,className,title, timeout, autoCloseWithT
 
   const [removing, setRemoving] = useState(false);
 
+  const thePositionOfContainer=positionAnimations[position?position:"right"]
+
   const removeMessage = () => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current)
     }
     if (messageRef.current && animation.slideAnimation) {
-      messageRef.current.classList.remove(styles.message_slide_up);
-      messageRef.current.classList.add(styles.message_slide_down);
+      messageRef.current.classList.remove(thePositionOfContainer.up);
+      messageRef.current.classList.add(thePositionOfContainer.down);
       setRemoving(true);
       setTimeout(() => {
         remove(base);
@@ -78,7 +98,7 @@ const Message = ({ message,button, type,className,title, timeout, autoCloseWithT
     <div ref={(instance) => {
       if (instance && animation.slideAnimation) {
         instance.style.setProperty("--duration", animation.animationDuration + "ms")
-        instance.classList.add(styles.message_slide_up);
+        instance.classList.add(thePositionOfContainer.up);
       }
       messageRef.current = instance;
     }} className={styles.message_wrapper + " " + selectedType.style+" "+(className?className:"")}>

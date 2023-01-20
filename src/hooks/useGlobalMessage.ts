@@ -25,6 +25,7 @@ export default () => {
         }
 
         const isValid=isMaxValid();
+  
 
         const messageObject={ message,button, type,className,title, timeout, autoCloseWithTimeout, animation,header,body, key:uuidv4() };
         if(!isValid){

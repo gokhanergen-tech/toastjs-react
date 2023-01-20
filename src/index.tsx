@@ -8,10 +8,13 @@ import Wrapper from './wrapper'
 
 interface ContainerProps {
     children: any,
-    maxMessageCount?: number
+    maxMessageCount?: number,
+    position?:position
 }
 
-export const ToastContainer = ({ children, maxMessageCount = 10 }: ContainerProps) => {
+export type position="left"|"right"|"center"
+
+export const ToastContainer = ({ children, maxMessageCount = 10,position="right" }: ContainerProps) => {
 
     const [messages, setMessage] = React.useState([]);
 
@@ -26,15 +29,14 @@ export const ToastContainer = ({ children, maxMessageCount = 10 }: ContainerProp
     }, [])
 
     const remove: Function = React.useCallback((message: withKey): void => {
-        setMessage(prev => prev.filter(messageGet => messageGet !== message));
         let inc=-1;
         if (queue.current.length > 0) {
             const messageQueue = queue.current.shift();
             messageQueue.key = uuidv4();
             add(messageQueue);
-            inc=+1;
         }
         messageCountRef.current+=inc;
+        setMessage(prev => prev.filter((messageGet:withKey) => messageGet.key !== message.key));
     }, [])
 
     const addQueue: Function = React.useCallback((message: withKey): void => {
@@ -42,6 +44,7 @@ export const ToastContainer = ({ children, maxMessageCount = 10 }: ContainerProp
     }, [])
 
     const isMaxValid: any = React.useCallback(() => {
+        console.log(messageCountRef.current,maxMessageCount)
         return messageCountRef.current<maxMessageCount;
     }, [])
 
@@ -54,7 +57,7 @@ export const ToastContainer = ({ children, maxMessageCount = 10 }: ContainerProp
 
 
     return <MessageContext.Provider value={memo}>
-        <MessagesContainer></MessagesContainer>
+        <MessagesContainer position={position}></MessagesContainer>
         <Wrapper>
             {
                 children
