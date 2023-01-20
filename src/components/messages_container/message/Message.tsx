@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { Fragment, useContext, useEffect, useRef, useState } from 'react'
 import MessageContext from '../../../context/context';
 import { withKey } from '../../../interfaces/interfaces';
 import Button from '../../button/button';
@@ -36,7 +36,7 @@ const types = {
   }
 }
 
-const Message = ({ message,button, type,className,title, timeout, autoCloseWithTimeout, header, body, base, animation }: withKey & { base: withKey }) => {
+const Message = ({ message, button, type, className, title, timeout, autoCloseWithTimeout, header, body, base, animation, Component }: withKey & { base: withKey }) => {
 
   const { remove }: any = useContext(MessageContext);
 
@@ -81,24 +81,30 @@ const Message = ({ message,button, type,className,title, timeout, autoCloseWithT
         instance.classList.add(styles.message_slide_up);
       }
       messageRef.current = instance;
-    }} className={styles.message_wrapper + " " + selectedType.style+" "+(className?className:"")}>
+    }} className={selectedType.style + " " + (className ? className : styles.message_wrapper)}>
 
       {
-        header ? header : <div className={styles.message_header}>
-          <h5>{title?title:selectedType.text}</h5>
-          <span>{selectedType.icon}</span>
-        </div>
+        Component ?
+          <Component></Component>
+          :
+          <Fragment>
+            {
+              header ? header : <div className={styles.message_header}>
+                <h5>{title ? title : selectedType.text}</h5>
+                <span>{selectedType.icon}</span>
+              </div>
+            }
+
+
+            <div>
+              {
+                body ? body : <p className={styles.message_text}>{message}</p>
+              }
+            </div>
+          </Fragment>
       }
-
-
-      <div>
-        {
-          body ? body : <p className={styles.message_text}>{message}</p>
-        }
-      </div>
-
       <div className={styles.message_button}>
-        <Button customClassName={(button&&button.className)?button.className:""} disabled={removing} onClick={removeMessage} value={(button&&button.title)?button.title:"OK"}></Button>
+        <Button customClassName={(button && button.className) ? button.className : ""} disabled={removing} onClick={removeMessage} value={(button && button.title) ? button.title : "OK"}></Button>
       </div>
 
       <div ref={(instance) => {

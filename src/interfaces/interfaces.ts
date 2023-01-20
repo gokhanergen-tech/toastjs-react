@@ -17,8 +17,8 @@ export interface Params{
     button:{
         className?:string,
         title?:string
-    }
-
+    },
+    Component?: React.FC|React.ComponentClass
  }
 
 export type withKey=Params&{key:number}
