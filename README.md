@@ -77,7 +77,7 @@ maxMessageCount={5} // default = 10
 
 ### Show Your Toast
 
-[![Product Name Screen Shot][product-screenshot]](https://github.com/gokhanergen-tech/toastjs-react/blob/main/images/toasts.png?raw=true)
+[![Product Name Screen Shot][product-screenshot]](https://github.com/gokhanergen-tech/toastjs-react)
 
 ### Built With
 
@@ -92,3 +92,6 @@ maxMessageCount={5} // default = 10
 Distributed under the MIT License.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- LINKS -->
+[product-screenshot]: https://github.com/gokhanergen-tech/toastjs-react/blob/main/images/toasts.png?raw=true
