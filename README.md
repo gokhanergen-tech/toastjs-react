@@ -9,7 +9,7 @@ ToastJS-React provides you create toasts for your responses.
 ## How To Use?
 
 ```jsx
-  function App() {
+function App() {
   return (
     <ToastContainer maxMessageCount={5}>
       <div className="App">
@@ -20,7 +20,11 @@ ToastJS-React provides you create toasts for your responses.
 }
 ```
 
-You must add your app components or elements between <ToastContainer>.
+You must add your app components or elements between
+```
+<ToastContainer>
+``` 
+component.
 
 ## License
 
