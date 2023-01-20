@@ -200,6 +200,6 @@ Distributed under the MIT License.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- LINKS -->
-[product-screenshot]: https://github.com/gokhanergen-tech/toastjs-react/blob/main/images/toasts.png?raw=true
+[product-screenshot]: https://raw.githubusercontent.com/gokhanergen-tech/toastjs-react/main/images/toasts.jpg
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
