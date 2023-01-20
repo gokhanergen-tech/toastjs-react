@@ -73,6 +73,11 @@ Change Your Maximum Toast
 maxMessageCount={5} // default = 10
 ```
 
+You could have many toasts in your screen. ToastJS-React is going to add them to a queue. It will show them in order.
+For example: 
+You have 8 toasts. And you set your max toast = 5 then firstly you are going to see 5 toasts until they become to fade out. Next, 
+you are going to see other 3 toasts.
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Show Your Toast
@@ -189,7 +194,7 @@ maxMessageCount={5} // default = 10
 
 ### Built With
 
-* [![React][React.js]][React-url]
+[![React][React.js]][React-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
