@@ -5,7 +5,8 @@ import ReactDOM from 'react-dom'
 
 import MessageContext from '../../context/context'
 import { withKey } from '../../interfaces/interfaces'
-const MessagesContainer = () => {
+import { position } from '../../index'
+const MessagesContainer = ({position}:{position:position}) => {
   const { messages }: any = useContext(MessageContext);
   const objectRef: { current: any } = useRef(document.createElement("div"));
   useLayoutEffect(() => {
@@ -13,11 +14,11 @@ const MessagesContainer = () => {
     document.body.appendChild(objectRef.current);
   }, [])
   return (
-    ReactDOM.createPortal(<Container>
+    ReactDOM.createPortal(<Container position={position}>
       <div>
         {
           messages.map((message: withKey) => {
-            return <Message base={message} {...message}></Message>
+            return <Message position={position} base={message} {...message}></Message>
           })
         }
       </div>
