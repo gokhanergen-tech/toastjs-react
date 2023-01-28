@@ -1,6 +1,6 @@
 {
   "name": "toastjs-react",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "This is a toast message library",
   "author": "gokhanergen-tech",
   "license": "MIT",
@@ -24,7 +24,7 @@
     "deploy": "gh-pages -d example/build"
   },
   "peerDependencies": {
-    "react": "^16.0.0"
+    "react": ">=16.0.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -63,5 +63,19 @@
   "dependencies": {
     "@types/uuid": "^9.0.0",
     "uuid": "^9.0.0"
-  }
+  },
+  "keywords": [
+    "toastjs",
+    "toast",
+    "notify",
+    "message",
+    "warning",
+    "success",
+    "error",
+    "toastjs-react",
+    "react",
+    "nodejs",
+    "node",
+    "library"
+  ]
 }

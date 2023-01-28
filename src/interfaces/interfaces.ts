@@ -1,6 +1,12 @@
 import React from "react"
 
- 
+export interface fetching{
+    promise:Promise<any>,
+    errorComponent:React.FC,
+    successComponent:React.FC,
+    response:(response:object,hasError:boolean)=>void
+}
+
 export interface Params{
     message:string,
     type:"info"|"error"|"success"|"warning",
@@ -18,7 +24,9 @@ export interface Params{
         className?:string,
         title?:string
     },
-    Component?: React.FC|React.ComponentClass
+    Component: React.FC,
+    fetchingOptions?:fetching
+
  }
 
 export type withKey=Params&{key:number}

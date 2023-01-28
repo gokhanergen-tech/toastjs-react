@@ -37,24 +37,24 @@ const types = {
   }
 }
 
-const positionAnimations={
-  left:{
-      up:styles.up_left,
-      down:styles.down_left
+const positionAnimations = {
+  left: {
+    up: styles.up_left,
+    down: styles.down_left
   },
-  right:{
-    up:styles.up_right,
-    down:styles.down_right
+  right: {
+    up: styles.up_right,
+    down: styles.down_right
   },
-  center:{
-    up:styles.up_center,
-    down:styles.down_center
+  center: {
+    up: styles.up_center,
+    down: styles.down_center
   }
 }
 
 
 
-const Message = ({ message,button, type,className,title, timeout, autoCloseWithTimeout, header, body, base, animation, Component,position }: withKey & { base: withKey,position:position }) => {
+const Message = ({ message, fetchingOptions, button, type, className, title, timeout, autoCloseWithTimeout, header, body, base, animation, Component, position }: withKey & { base: withKey, position: position }) => {
 
   const { remove }: any = useContext(MessageContext);
 
@@ -64,7 +64,11 @@ const Message = ({ message,button, type,className,title, timeout, autoCloseWithT
 
   const [removing, setRemoving] = useState(false);
 
-  const thePositionOfContainer=positionAnimations[position?position:"right"]
+  //fetching
+  const [hasError, setHasError]:React.SetStateAction<any> = useState(null);
+  const {successComponent:Success,errorComponent:Error}=fetchingOptions?fetchingOptions:{successComponent:null,errorComponent:null};
+
+  const thePositionOfContainer = positionAnimations[position ? position : "right"]
 
   const removeMessage = () => {
     if (timeoutRef.current) {
@@ -90,9 +94,26 @@ const Message = ({ message,button, type,className,title, timeout, autoCloseWithT
         removeMessage();
       }, timeout + ((animation.slideAnimation) ? animation.animationDuration : 0))
     }
+
+    if (fetchingOptions) {
+      (async () => {
+        const { promise, response } = fetchingOptions;
+        let data=null;
+        let error:boolean=false;
+        try{
+          data=await promise;
+          setHasError(false);
+          error=true;
+        }catch(err){
+          data=err;
+          setHasError(true);
+        }
+        response(data,error);
+      })();
+    }
   }, [])
 
-  const selectedType = types[type];
+  const selectedType = types[(hasError===null?type:(hasError===true?"error":"success"))];
 
   return (
     <div ref={(instance) => {
@@ -104,8 +125,8 @@ const Message = ({ message,button, type,className,title, timeout, autoCloseWithT
     }} className={selectedType.style + " " + (className ? className : styles.message_wrapper)}>
 
       {
-        Component ?
-          <Component></Component>
+        Component || fetchingOptions ?
+          hasError === null ? (<Component></Component>) : (hasError ?(Error&&<Error></Error>): (Success&&<Success></Success>))
           :
           <Fragment>
             {

@@ -41,16 +41,9 @@ $ npm install toastjs-react
 
 ## Usage
 
+Add ToastJS-React CSS file to your index.js.
 ```jsx
-function App() {
-  return (
-    <ToastContainer maxMessageCount={5}>
-      <div className="App">
-        
-      </div>
-    </ToastContainer>
-  );
-}
+import 'toastjs-react/dist/index.css'
 ```
 
 You must add your app components or elements between
@@ -59,11 +52,26 @@ You must add your app components or elements between
 ``` 
 component. 
 
+```jsx
+import { ToastContainer } from 'toastjs-react'
+
+return (
+  <ToastContainer maxMessageCount={5} position="center">
+    <App />
+  </ToastContainer>
+);
+```
+
 You can limit your max toasts in your projects using below.
 
 Change Your Maximum Toast 
 ```js
-maxMessageCount={5} // default = 10
+maxMessageCount={5} // Optional, default = 10
+```
+
+Change Your Toast Positin
+```js
+position={"left"|"right"|"center"} // Optional, default = "right"
 ```
 
 You could have many toasts in your screen. ToastJS-React is going to add them to a queue. It will show them in order.
@@ -77,7 +85,7 @@ you are going to see other 3 toasts.
 
 ```ts
  // Import useGlobalMessage Hook
- import { useGlobalMessage } from './ToastContainer';
+ import { useGlobalMessage } from 'toastjs-react';
  
  // Call It In Your Component
  const toast = useGlobalMessage();
@@ -181,7 +189,20 @@ you are going to see other 3 toasts.
         * You do not have to use our toast component. You can create a custom and define it.
         * Optional, default = null
         */
-        Component?: React.FC|React.ComponentClass
+        Component?: React.FC,
+
+        /*
+        * You can use to fetch with promise
+        * Also, you can take error or success response and no matter what 'hasError' is 
+        * successComponent is for when the result is successfull otherwise errorComponent but if promise is   in  fetching, Component will be shown by default.
+        */
+        fetching?:{
+           promise:Promise<any>,
+           errorComponent:React.FC,
+           successComponent:React.FC,
+           response:(response:object,hasError:boolean)=>void
+        }
+
     }
 ```
 
