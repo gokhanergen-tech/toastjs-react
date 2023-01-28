@@ -194,9 +194,9 @@ you are going to see other 3 toasts.
         /*
         * You can use to fetch with promise
         * Also, you can take error or success response and no matter what 'hasError' is 
-        * successComponent is for when the result is successfull otherwise errorComponent but if promise is   in  fetching, Component will be shown by default.
+        * successComponent is for when the result is successfull otherwise errorComponent but if promise is in fetching, Component will be shown by default
         */
-        fetching?:{
+        fetchingOptions?:{
            promise:Promise<any>,
            errorComponent:React.FC,
            successComponent:React.FC,
