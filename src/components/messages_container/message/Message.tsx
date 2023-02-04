@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect, useRef, useState } from 'react'
+import React, { Fragment, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import MessageContext from '../../../context/context';
 import { withKey } from '../../../interfaces/interfaces';
 import { position } from '../../../index'
@@ -52,8 +52,6 @@ const positionAnimations = {
   }
 }
 
-
-
 const Message = ({ message, fetchingOptions, button, type, className, title, timeout, autoCloseWithTimeout, header, body, base, animation, Component, position }: withKey & { base: withKey, position: position }) => {
 
   const { remove }: any = useContext(MessageContext);
@@ -65,8 +63,8 @@ const Message = ({ message, fetchingOptions, button, type, className, title, tim
   const [removing, setRemoving] = useState(false);
 
   //fetching
-  const [hasError, setHasError]:React.SetStateAction<any> = useState(null);
-  const {successComponent:Success,errorComponent:Error}=fetchingOptions?fetchingOptions:{successComponent:null,errorComponent:null};
+  const [hasError, setHasError]: React.SetStateAction<any> = useState(null);
+  const { successComponent: Success, errorComponent: Error } = fetchingOptions ? fetchingOptions : { successComponent: null, errorComponent: null };
 
   const thePositionOfContainer = positionAnimations[position ? position : "right"]
 
@@ -98,22 +96,41 @@ const Message = ({ message, fetchingOptions, button, type, className, title, tim
     if (fetchingOptions) {
       (async () => {
         const { promise, response } = fetchingOptions;
-        let data=null;
-        let error:boolean=false;
-        try{
-          data=await promise;
+        let data = null;
+        let error: boolean = false;
+        try {
+          data = await promise;
           setHasError(false);
-          error=true;
-        }catch(err){
-          data=err;
+          error = true;
+        } catch (err) {
+          data = err;
           setHasError(true);
         }
-        response(data,error);
+        response(data, error);
       })();
     }
   }, [])
 
-  const selectedType = types[(hasError===null?type:(hasError===true?"error":"success"))];
+  const selectedType = types[(hasError === null ? type : (hasError === true ? "error" : "success"))];
+
+  const Default: React.FC = useMemo(() => {
+    return () => <Fragment>
+        {
+          header ? header : <div className={styles.message_header}>
+            <h5>{title ? title : selectedType.text}</h5>
+            <span>{selectedType.icon}</span>
+          </div>
+        }
+
+
+        <div className={(!body ? styles.body : "")}>
+          {
+            body ? body : <p className={styles.message_text}>{message}</p>
+          }
+        </div>
+
+    </Fragment>
+  }, [])
 
   return (
     <div ref={(instance) => {
@@ -122,27 +139,13 @@ const Message = ({ message, fetchingOptions, button, type, className, title, tim
         instance.classList.add(thePositionOfContainer.up);
       }
       messageRef.current = instance;
-    }} className={selectedType.style + " " + (styles.message_wrapper)+" "+(className?className:"")}>
+    }} className={selectedType.style + " " + (styles.message_wrapper) + " " + (className ? className : "")}>
 
       {
-        Component || fetchingOptions ?
-          hasError === null ? (<Component></Component>) : (hasError ?(Error&&<Error></Error>): (Success&&<Success></Success>))
+        (Component || fetchingOptions) ?
+          hasError === null ? (Component ? <Component></Component> : <Default></Default>) : (hasError ? (Error && <Error></Error>) : (Success && <Success></Success>))
           :
-          <Fragment>
-            {
-              header ? header : <div className={styles.message_header}>
-                <h5>{title ? title : selectedType.text}</h5>
-                <span>{selectedType.icon}</span>
-              </div>
-            }
-
-
-            <div className={(!body?styles.body:"")}>
-              {
-                body ? body : <p className={styles.message_text}>{message}</p>
-              }
-            </div>
-          </Fragment>
+          <Default></Default>
       }
       <div className={styles.message_button}>
         <Button customClassName={(button && button.className) ? button.className : ""} disabled={removing} onClick={removeMessage} value={(button && button.title) ? button.title : "OK"}></Button>
