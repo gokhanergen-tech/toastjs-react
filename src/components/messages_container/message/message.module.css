@@ -8,9 +8,7 @@
 
 
 .message_wrapper {
-    background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 0 0 5px black;
-    padding: 0.3rem 0.5rem;
     margin: 0.5rem 0.5rem;
     position: relative;
     width: 250px;
@@ -51,6 +49,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0.3rem 0.5rem;
 }
 
 .message_header h5 {
@@ -101,6 +100,11 @@
 .message_button {
     display: flex;
     justify-content: center;
+    padding: 0.3rem 0.5rem;
+}
+
+.body{
+    padding: 0.3rem 0.5rem;
 }
 
 .divider {

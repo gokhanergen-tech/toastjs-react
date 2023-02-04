@@ -122,7 +122,7 @@ const Message = ({ message, fetchingOptions, button, type, className, title, tim
         instance.classList.add(thePositionOfContainer.up);
       }
       messageRef.current = instance;
-    }} className={selectedType.style + " " + (className ? className : styles.message_wrapper)}>
+    }} className={selectedType.style + " " + (styles.message_wrapper)+" "+(className?className:"")}>
 
       {
         Component || fetchingOptions ?
@@ -137,7 +137,7 @@ const Message = ({ message, fetchingOptions, button, type, className, title, tim
             }
 
 
-            <div>
+            <div className={(!body?styles.body:"")}>
               {
                 body ? body : <p className={styles.message_text}>{message}</p>
               }
