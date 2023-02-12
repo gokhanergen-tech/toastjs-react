@@ -229,3 +229,5 @@ Distributed under the MIT License.
 
 <b>1.0.7</b>
  - Customing any message has been improved
+<b>1.0.8</b>
+ - The importing of index.css position has been corrected
