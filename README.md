@@ -43,7 +43,7 @@ $ npm install toastjs-react
 
 Add ToastJS-React CSS file to your index.js.
 ```jsx
-import 'toastjs-react/dist/index.css'
+import 'toastjs-react/index.css'
 ```
 
 You must add your app components or elements between
@@ -224,3 +224,8 @@ Distributed under the MIT License.
 [product-screenshot]: https://raw.githubusercontent.com/gokhanergen-tech/toastjs-react/main/images/toasts.jpg
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
+
+<!-- SOME VERSIONS INFO -->
+
+<b>1.0.7</b>
+ - Customing any message has been improved
