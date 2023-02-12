@@ -227,7 +227,12 @@ Distributed under the MIT License.
 
 <!-- SOME VERSIONS INFO -->
 
-<b>1.0.7</b>
+<div>
+ <b>1.0.7</b></br>
  <p>- Customing any message has been improved</p>
-<b>1.0.8</b>
+</div>
+<div>
+ <b>1.0.8</b></br>
  <p>- The importing of index.css position has been corrected</p>
+</div>
+
