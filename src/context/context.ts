@@ -1,5 +1,4 @@
-import React from "react"
+import React from 'react'
 
-const MessageContext= React.createContext({});
-export default MessageContext;
-
+const MessageContext = React.createContext({})
+export default MessageContext
