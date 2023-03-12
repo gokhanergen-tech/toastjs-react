@@ -235,4 +235,8 @@ Distributed under the MIT License.
  <b>1.0.8</b></br>
  <p>- The importing of index.css position has been corrected</p>
 </div>
+<div>
+ <b>1.0.10</b></br>
+ <p>- Fixed background color for message box</p>
+</div>
 
