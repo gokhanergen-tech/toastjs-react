@@ -13,6 +13,7 @@
     position: relative;
     width: 250px;
     background-color: white;
+    box-sizing: border-box;
 }
 
 .wrapper_default{
@@ -20,7 +21,7 @@
 }
 
 .up_right {
-    animation: up_right var(--duration) cubic-bezier(0.7, 0.8, 1.0, 0.99);
+    animation: up_right var(--duration) cubic-bezier(.88,.88,.62,1.2);
     animation-fill-mode: forwards;
 }
 
@@ -30,7 +31,7 @@
 }
 
 .up_left {
-    animation: up_left var(--duration) cubic-bezier(0.7, 0.8, 1.0, 0.99);
+    animation: up_left var(--duration) cubic-bezier(.88,.88,.62,1.2);
     animation-fill-mode: forwards;
 }
 
@@ -134,11 +135,6 @@
         opacity: 0;
     }
 
-    75%{
-        transform: translateX(50px);
-        opacity: 1; 
-    }
-
     100% {
         transform: translateX(0px);
         opacity: 1;
@@ -161,11 +157,6 @@
     0% {
         transform: translateX(250px);
         opacity: 0;
-    }
-
-    75%{
-        transform: translateX(-50px);
-        opacity: 1; 
     }
 
     100% {

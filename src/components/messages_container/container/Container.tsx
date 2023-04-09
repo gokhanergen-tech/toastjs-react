@@ -1,7 +1,8 @@
 import React from 'react'
-import { position } from '../../../index'
+
 
 import styles from './container.module.css'
+import { position } from '../../..'
 
 const positionStyles: object = {
   left: {

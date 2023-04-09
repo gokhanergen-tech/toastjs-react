@@ -2,13 +2,13 @@ import React from 'react'
 
 export interface fetching {
   promise: Promise<any>
-  errorComponent: React.FC
-  successComponent: React.FC
+  errorComponent: (response?:any)=>React.ReactElement
+  successComponent: (response?:any)=>React.ReactElement
   response: (response: object, hasError: boolean) => void
 }
 
 export interface Params {
-  message: string
+  message?: string
   type: 'info' | 'error' | 'success' | 'warning'
   timeout: number
   autoCloseWithTimeout: boolean

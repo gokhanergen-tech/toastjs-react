@@ -8,10 +8,11 @@ import React, {
 } from 'react'
 import MessageContext from '../../../context/context'
 import { withKey } from '../../../interfaces/interfaces'
-import { position } from '../../../index'
+
 import Button from '../../button/button'
 
 import styles from './message.module.css'
+import { position } from '../../..'
 
 const types = {
   info: {
@@ -118,13 +119,19 @@ const Message = ({
   const messageRef: { current: any } = useRef(null)
 
   const [removing, setRemoving] = useState(false)
+  const [response,setReponse]=useState(null);
 
   // fetching
   const [hasError, setHasError]: React.SetStateAction<any> = useState(null)
-  const { successComponent: Success, errorComponent: Error } = fetchingOptions || { successComponent: null, errorComponent: null };
+  const { successComponent, errorComponent } = fetchingOptions || { successComponent: null, errorComponent: null };
+  
 
   const thePositionOfContainer =
     positionAnimations[position ? position : 'right']
+
+  const {Success,Error}:{Success:React.ReactElement,Error:React.ReactElement}=useMemo(()=>{
+     return {Success:successComponent?successComponent(response):<></>,Error:errorComponent?errorComponent(response):<></>}
+  },[response])
 
   const removeMessage = () => {
     if (timeoutRef.current) {
@@ -153,7 +160,7 @@ const Message = ({
     if (fetchingOptions) {
       ; (async () => {
         const { promise, response } = fetchingOptions
-        let data = null
+        let data:any = null
         let error: boolean = false
         try {
           data = await promise
@@ -164,6 +171,7 @@ const Message = ({
           setHasError(true)
         }
         response(data, error)
+        setReponse(data);
       })()
     }
   }, [])
@@ -174,7 +182,6 @@ const Message = ({
   const Default: React.FC = useMemo(() => {
     return () => (
       <Fragment>
-
         {
           header || <div className={styles.message_header}>
             <h5>{title ? title : selectedType.text}</h5>
@@ -217,9 +224,9 @@ const Message = ({
             <Default></Default>
           )
         ) : hasError ? (
-          Error && <Error></Error>
+          Error
         ) : (
-          Success && <Success></Success>
+          Success
         )
       ) : (
         <Default></Default>

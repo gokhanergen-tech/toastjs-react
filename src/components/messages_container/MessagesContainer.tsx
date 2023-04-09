@@ -5,7 +5,8 @@ import ReactDOM from 'react-dom'
 
 import MessageContext from '../../context/context'
 import { withKey } from '../../interfaces/interfaces'
-import { position } from '../../index'
+import { position } from '../..'
+
 const MessagesContainer = ({ position }: { position: position }) => {
   const { messages }: any = useContext(MessageContext)
   const objectRef: { current: any } = useRef(document.createElement('div'))

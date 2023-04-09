@@ -239,4 +239,8 @@ Distributed under the MIT License.
  <b>1.0.10</b></br>
  <p>- Fixed background color for message box</p>
 </div>
+<div>
+ <b>1.0.11</b></br>
+ <p>- Added 'response' to error and success components for fetching processes</p>
+</div>
 
