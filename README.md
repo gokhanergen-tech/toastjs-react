@@ -197,10 +197,10 @@ you are going to see other 3 toasts.
         * successComponent is for when the result is successfull otherwise errorComponent but if promise is in fetching, Component will be shown by default
         */
         fetchingOptions?:{
-           promise:Promise<any>,
-           errorComponent:React.FC,
-           successComponent:React.FC,
-           response:(response:object,hasError:boolean)=>void
+           promise: Promise<any>
+           errorComponent: (response?:any)=>React.ReactElement
+           successComponent: (response?:any)=>React.ReactElement
+           response: (response: object, hasError: boolean) => void
         }
 
     }
